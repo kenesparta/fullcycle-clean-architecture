@@ -1,2 +1,2 @@
-# fullcycle-crean-architecture
+# Clean Architecture
 Clean Architecture Challenge
