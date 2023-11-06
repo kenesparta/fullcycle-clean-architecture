@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: mysql
+    restart: always
+    env_file:
+      - .mysql.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - clean_arch:/var/lib/mysql
+    networks:
+      - clean_arch
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - .rabbit.env
+    networks:
+      - clean_arch
+
+  goapp:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    container_name: goapp
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    networks:
+      - clean_arch
+
+volumes:
+  clean_arch:
+
+networks:
+  clean_arch:
+    driver: bridge

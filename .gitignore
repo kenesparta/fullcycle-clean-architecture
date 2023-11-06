@@ -22,3 +22,7 @@ go.work
 .idea
 
 *.env
+internal/infra/grpc/pb
+internal/infra/gql/graph
+cmd/ordersystem/wire_gen.go
+internal/infra/gql/schema.resolvers.go

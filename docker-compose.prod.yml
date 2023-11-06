@@ -11,6 +11,8 @@ services:
       - "3306:3306"
     volumes:
       - clean_arch:/var/lib/mysql
+    networks:
+      - clean_arch
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -21,6 +23,23 @@ services:
       - "15672:15672"
     env_file:
       - .rabbit.env
+    networks:
+      - clean_arch
+
+  goapp:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    networks:
+      - clean_arch
 
 volumes:
   clean_arch:
+
+networks:
+  clean_arch:
+    driver: bridge
