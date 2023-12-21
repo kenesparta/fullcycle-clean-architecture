@@ -11,6 +11,7 @@ services:
       - "3306:3306"
     volumes:
       - clean_arch:/var/lib/mysql
+      - ./sql/creation.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - clean_arch
 
@@ -29,10 +30,12 @@ services:
   goapp:
     build:
       context: .
-      dockerfile: Dockerfile-prod
+      dockerfile: Dockerfile
     container_name: goapp
     ports:
       - "8080:8080"
+      - "8088:8088"
+      - "50051:50051"
     volumes:
       - .:/app
     networks:

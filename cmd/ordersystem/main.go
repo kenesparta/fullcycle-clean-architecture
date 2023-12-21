@@ -17,7 +17,7 @@ import (
 	"github.com/kenesparta/fullcycle-clean-architecture/internal/infra/grpc/service"
 	"github.com/kenesparta/fullcycle-clean-architecture/internal/infra/web/webserver"
 	"github.com/kenesparta/fullcycle-clean-architecture/pkg/events"
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -49,8 +49,8 @@ func main() {
 
 	newWebServer := webserver.NewWebServer(cfgs.WebServerPort)
 	webOrderHandler := NewWebOrderHandler(db, eventDispatcher)
-	newWebServer.AddHandler("/order", webOrderHandler.Create)
-	newWebServer.AddHandler("/list", webOrderHandler.List)
+	newWebServer.AddHandler(http.MethodPost, "/order", webOrderHandler.Create)
+	newWebServer.AddHandler(http.MethodGet, "/order", webOrderHandler.List)
 	fmt.Println("Starting web server on port", cfgs.WebServerPort)
 	go newWebServer.Start()
 

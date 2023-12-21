@@ -9,13 +9,8 @@ init:
 	go generate ./cmd/ordersystem/wire.go
 	go mod tidy
 
-prod/build:
+build:
 	GOOS=linux CGO_ENABLED=0 go build -ldflags="-w -s" -o server ./cmd/ordersystem
 
-prod: init prod/build
-
-prod/dkr:
-	docker-compose -f docker-compose.prod.yml up -d --build
-
-dev/dkr:
-	docker-compose -f docker-compose.dev.yml up -d --build
+run:
+	docker compose -f docker-compose.yml up -d --build

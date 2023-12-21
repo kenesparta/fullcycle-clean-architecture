@@ -8,28 +8,38 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
+type HandlerProps struct {
+	Method string
+	Path   string
+	Func   http.HandlerFunc
+}
+
 type WebServer struct {
-	Router        chi.Router
-	Handlers      map[string]http.HandlerFunc
 	WebServerPort string
+	Router        chi.Router
+	Handlers      []HandlerProps
 }
 
 func NewWebServer(serverPort string) *WebServer {
 	return &WebServer{
 		Router:        chi.NewRouter(),
-		Handlers:      make(map[string]http.HandlerFunc),
+		Handlers:      make([]HandlerProps, 0),
 		WebServerPort: fmt.Sprintf(":%s", serverPort),
 	}
 }
 
-func (s *WebServer) AddHandler(path string, handler http.HandlerFunc) {
-	s.Handlers[path] = handler
+func (s *WebServer) AddHandler(method, path string, handler http.HandlerFunc) {
+	s.Handlers = append(s.Handlers, HandlerProps{
+		Method: method,
+		Path:   path,
+		Func:   handler,
+	})
 }
 
 func (s *WebServer) Start() {
 	s.Router.Use(middleware.Logger)
-	for path, handler := range s.Handlers {
-		s.Router.Handle(path, handler)
+	for _, h := range s.Handlers {
+		s.Router.Method(h.Method, h.Path, h.Func)
 	}
 	err := http.ListenAndServe(s.WebServerPort, s.Router)
 	if err != nil {

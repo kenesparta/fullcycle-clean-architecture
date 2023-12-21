@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/kenesparta/fullcycle-clean-architecture/pkg/events"
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 type OrderCreatedHandler struct {
