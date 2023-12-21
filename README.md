@@ -19,11 +19,11 @@ Clean Architecture Challenge
 - You can see the SQL script in `./sql/creation.sql`
 ```mermaid
 classDiagram
-direction BT
-class orders {
-   [PK] varchar(8) id
-   decimal(10,2) price
-   decimal(10,2) tax
-   decimal(10,2) final_price
-}
+   class orders {
+      +VARCHAR(8) id
+      +DECIMAL(10, 2) price
+      +DECIMAL(10, 2) tax
+      +DECIMAL(10, 2) final_price
+   }
+
 ```
