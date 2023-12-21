@@ -20,10 +20,9 @@ Clean Architecture Challenge
 ```mermaid
 classDiagram
    class orders {
-      +VARCHAR(8) id
+      +VARCHAR(8) id PK
       +DECIMAL(10, 2) price
       +DECIMAL(10, 2) tax
       +DECIMAL(10, 2) final_price
    }
-
 ```
