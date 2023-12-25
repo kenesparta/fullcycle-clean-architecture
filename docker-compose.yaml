@@ -18,8 +18,8 @@ services:
     restart: always
     healthcheck:
       test: rabbitmq-diagnostics -q ping
-      interval: 7s
-      timeout: 7s
+      interval: 15s
+      timeout: 15s
       retries: 3
     ports:
       - "5672:5672"

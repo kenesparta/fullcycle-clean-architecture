@@ -30,18 +30,19 @@ classDiagram
 # 🧪 Test the project
 > ⚠️ **Generate UUID:**
 >
-> You can use `uuidgen` command to generate UUIDs
-## REST
-1. You can open the file `./api/create_order.http` to insert a new order.
-2. You can open the file `./api/list_order.http` to list the created orders.
+> You can use `uuidgen` command to generate UUIDs to create a different ID.
 
-## graphQL
-Open the server: http://127.0.0.1:8088 and execute the following queries:
-1. To create orders:
+## REST
+1. You can run the file `./api/create_order.http` to insert a new order.
+2. You can run the file `./api/list_order.http` to list the created orders.
+
+## GraphQL
+You not need to install any extra software. Open the server: http://127.0.0.1:8088 and execute the following queries:
+1. To create orders, copy this mutation
    ```graphql
    mutation createOrder {
       createOrder(
-        input: {id: "0999B54C-EB83-4F70-981A-08F56324A5F3", Price: 129.54, Tax: 0.77}
+        input: {id: "48DCB3BF-7083-4102-8ABB-71DC96F1797E", Price: 129.54, Tax: 0.77}
       ) {
             id
             Price
@@ -50,9 +51,10 @@ Open the server: http://127.0.0.1:8088 and execute the following queries:
          }
    }
    ```
-2. To list orders:
+   ![img.png](img/gql_createOrder.png.png)
+2. To list order, copy this query
    ```graphql
-   query createOrder {
+   query listOrder {
      listOrder {
          id
          Price
@@ -61,3 +63,14 @@ Open the server: http://127.0.0.1:8088 and execute the following queries:
      }
    }
    ```
+   ![img.png](img/gql_listOrder.png)
+
+## GRPC
+1. You can download the **evans CLI** from [this link](https://github.com/ktr0731/evans).
+2. Run the evans client by tipping this command: 
+   ```sh
+   evans --proto internal/infra/grpc/protofiles/order.proto repl
+   ```
+3. To create a new order, in the command line, type `call CreateOrder`
+   ![img.png](img/grpc_createOrder.png)
+4. To list orders, in the command line, type `call `

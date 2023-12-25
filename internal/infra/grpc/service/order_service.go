@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-
 	"github.com/kenesparta/fullcycle-clean-architecture/internal/dto"
 	"github.com/kenesparta/fullcycle-clean-architecture/internal/infra/grpc/pb"
 	"github.com/kenesparta/fullcycle-clean-architecture/internal/usecase"
@@ -11,11 +10,13 @@ import (
 type OrderService struct {
 	pb.UnimplementedOrderServiceServer
 	CreateOrderUseCase usecase.CreateOrderUseCase
+	ListOrderUseCase   usecase.ListOrderUseCase
 }
 
-func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderService {
+func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase, listOrderUseCase usecase.ListOrderUseCase) *OrderService {
 	return &OrderService{
 		CreateOrderUseCase: createOrderUseCase,
+		ListOrderUseCase:   listOrderUseCase,
 	}
 }
 
@@ -37,6 +38,21 @@ func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderReques
 	}, nil
 }
 
-func (s *OrderService) ListOrders(ctx context.Context, lo *pb.ListOrdersRequest) (*pb.ListOrdersResponse, error) {
-	return nil, nil
+func (s *OrderService) ListOrder(ctx context.Context, lo *pb.ListOrderRequest) (*pb.ListOrderResponse, error) {
+	outputOrders, err := s.ListOrderUseCase.Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	var orderList *pb.ListOrderResponse
+	for _, order := range outputOrders {
+		orderList.Orders = append(orderList.Orders, &pb.Order{
+			Id:         order.ID,
+			Price:      float32(order.Price),
+			Tax:        float32(order.Tax),
+			FinalPrice: float32(order.FinalPrice),
+		})
+	}
+
+	return orderList, nil
 }
