@@ -9,9 +9,9 @@ services:
       - .mysql.env
     ports:
       - "3306:3306"
-    volumes:
-      - clean_arch:/var/lib/mysql
-      - ./sql/creation.sql:/docker-entrypoint-initdb.d/init.sql
+#    volumes:
+#      - clean_arch:/var/lib/mysql
+#      - ./sql/creation.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - clean_arch
 
@@ -19,6 +19,11 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     restart: always
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 5s
+      retries: 3
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -40,9 +45,12 @@ services:
       - .:/app
     networks:
       - clean_arch
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
-volumes:
-  clean_arch:
+#volumes:
+#  clean_arch:
 
 networks:
   clean_arch:
