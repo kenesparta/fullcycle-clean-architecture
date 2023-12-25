@@ -26,3 +26,38 @@ classDiagram
       +DECIMAL(10, 2) final_price
    }
 ```
+
+# 🧪 Test the project
+> ⚠️ **Generate UUID:**
+>
+> You can use `uuidgen` command to generate UUIDs
+## REST
+1. You can open the file `./api/create_order.http` to insert a new order.
+2. You can open the file `./api/list_order.http` to list the created orders.
+
+## graphQL
+Open the server: http://127.0.0.1:8088 and execute the following queries:
+1. To create orders:
+   ```graphql
+   mutation createOrder {
+      createOrder(
+        input: {id: "0999B54C-EB83-4F70-981A-08F56324A5F3", Price: 129.54, Tax: 0.77}
+      ) {
+            id
+            Price
+            Tax
+            FinalPrice
+         }
+   }
+   ```
+2. To list orders:
+   ```graphql
+   query createOrder {
+     listOrder {
+         id
+         Price
+         Tax
+         FinalPrice
+     }
+   }
+   ```

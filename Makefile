@@ -7,7 +7,7 @@ init:
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 	go generate ./internal/infra/grpc
 	go generate ./internal/infra/gql
-	go generate ./cmd/ordersystem/wire.go
+	go generate ./cmd/ordersystem/tools.go
 	go mod tidy
 
 .PHONY: build

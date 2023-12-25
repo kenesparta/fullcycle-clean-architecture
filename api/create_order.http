@@ -4,12 +4,7 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-    "id":"f1528d25-2f98-4e52-800c-6a347d095589",
+    "id":"D0133B1D-F67E-4747-A2CF-7AB04696A2F5",
     "price": 237.3,
     "tax": 0.8
 }
-
-###
-GET http://localhost:8080/order HTTP/1.1
-Host: localhost:8080
-Content-Type: application/json
