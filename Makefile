@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+-include .env
 
 .PHONY: prepare
 prepare:
