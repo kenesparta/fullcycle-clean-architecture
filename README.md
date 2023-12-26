@@ -75,5 +75,5 @@ You not need to install any extra software. Open the server: http://127.0.0.1:80
    ```
 3. To create a new order, in the command line, type `call CreateOrder`
    ![img.png](img/grpc_createOrder.png)
-4. To list orders, in the command line, type `call `
+4. To list orders, in the command line, type `call ListOrder`
    ![img.png](img/grpc_listOrder.png)
