@@ -13,14 +13,17 @@ type OrderService struct {
 	ListOrderUseCase   usecase.ListOrderUseCase
 }
 
-func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase, listOrderUseCase usecase.ListOrderUseCase) *OrderService {
+func NewOrderService(
+	createOrderUseCase usecase.CreateOrderUseCase,
+	listOrderUseCase usecase.ListOrderUseCase,
+) *OrderService {
 	return &OrderService{
 		CreateOrderUseCase: createOrderUseCase,
 		ListOrderUseCase:   listOrderUseCase,
 	}
 }
 
-func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
+func (s *OrderService) CreateOrder(_ context.Context, in *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
 	orderDto := dto.OrderInput{
 		ID:    in.Id,
 		Price: float64(in.Price),
@@ -38,13 +41,16 @@ func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderReques
 	}, nil
 }
 
-func (s *OrderService) ListOrder(ctx context.Context, lo *pb.ListOrderRequest) (*pb.ListOrderResponse, error) {
+func (s *OrderService) ListOrder(_ context.Context, _ *pb.ListOrderRequest) (*pb.ListOrderResponse, error) {
 	outputOrders, err := s.ListOrderUseCase.Execute()
 	if err != nil {
 		return nil, err
 	}
 
-	var orderList *pb.ListOrderResponse
+	orderList := &pb.ListOrderResponse{
+		Orders: make([]*pb.Order, 0),
+	}
+
 	for _, order := range outputOrders {
 		orderList.Orders = append(orderList.Orders, &pb.Order{
 			Id:         order.ID,

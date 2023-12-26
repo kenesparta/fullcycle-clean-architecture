@@ -20,12 +20,12 @@ run:
 
 .PHONY: migrate/up
 migrate/up:
-	export $(cat .env | xargs) && echo ${DB_USER} && migrate -path=sql/migrations \
+	migrate -path=sql/migrations \
 		-database "mysql://${DB_USER}:${DB_PASSWORD}@tcp(127.0.0.1:3306)/${DB_NAME}" \
 		-verbose up
 
 .PHONY: migrate/down
 migrate/down:
-	export $(cat .env | xargs) && echo ${DB_USER} && migrate -path=sql/migrations \
+	migrate -path=sql/migrations \
 		-database "mysql://${DB_USER}:${DB_PASSWORD}@tcp(127.0.0.1:3306)/${DB_NAME}" \
 		-verbose down
