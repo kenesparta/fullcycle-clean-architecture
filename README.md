@@ -40,7 +40,7 @@ classDiagram
 
 ## GraphQL
 You not need to install any extra software. Open the server: http://127.0.0.1:8088 and execute the following queries:
-1. To create orders, copy this mutation
+1. To create orders, execute this mutation
    ```graphql
    mutation createOrder {
       createOrder(
@@ -54,7 +54,7 @@ You not need to install any extra software. Open the server: http://127.0.0.1:80
    }
    ```
    ![img.png](img/gql_createOrder.png.png)
-2. To list order, copy this query
+2. To list order, execute this query
    ```graphql
    query listOrder {
      listOrder {
