@@ -1,5 +1,11 @@
 SHELL := /bin/bash
 
+.PHONY: prepare
+prepare:
+	cp .env.example .env
+	cp .rabbit.env.example .rabbit.env
+	cp .mysql.env.example .mysql.env
+
 .PHONY: init
 init:
 	go install github.com/google/wire/cmd/wire@latest

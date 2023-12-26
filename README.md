@@ -5,9 +5,7 @@ Clean Architecture Challenge
 # 🚀 Run the project
 
 1. Copy `*.env` files by running these commands:
-    - `cp .mysql.env.example .mysql.env`
-    - `cp .rabbit.env.example .rabbit.env`
-    - `cp .env.example .env`
+    - `make prepare`
 2. You can use the default credentials inside the `*.example` files, or you can replace them with your own credentials.
 3. Run the command 
    - `make run`
